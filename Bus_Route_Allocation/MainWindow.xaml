@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bus_Route_Allocation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="550" Width="550">
     <Grid>
-        
+        <TextBox HorizontalAlignment="Left" Height="27" Margin="76,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="404"/>
+        <TextBlock HorizontalAlignment="Left" Height="27" Margin="24,79,0,0" TextWrapping="Wrap" Text="From:" VerticalAlignment="Top" Width="47"/>
+        <TextBlock HorizontalAlignment="Left" Height="27" Margin="24,106,0,0" TextWrapping="Wrap" Text="To:" VerticalAlignment="Top" Width="47"/>
+        <TextBox HorizontalAlignment="Left" Height="27" Margin="76,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="404"/>
+
     </Grid>
 </Window>

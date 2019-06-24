@@ -63,6 +63,25 @@ namespace Bus_Route_Allocation
             }
         }
 
+        public List<string> Common_bus(Station st1, Station st2)
+        {
+            var answ = new List<string>();
+            foreach((string bus, string n, double time) in st1.neighbours)
+            {
+                foreach ((string bus2, string n2, double time2) in st2.neighbours)
+                {
+                    if ( (n == st2.Name) && (n2 ==st1.Name))
+                    {
+                        if (bus == bus2)
+                        {
+                            answ.Add(bus);
+                        }
+                    }
+                }
+            }
+            return answ;
+        }
+
         private void Button_click(object sender, RoutedEventArgs e)
         {
             string str1 = form.Text;
@@ -105,6 +124,7 @@ namespace Bus_Route_Allocation
             
             (var path, var time) = Find_path.Route(str1, str2,
                                                    Stations, Waiting_time);
+            string prev = str1;
             Console.WriteLine(time);
             cv.Children.Clear();
             int ofset = 25;
@@ -129,6 +149,19 @@ namespace Bus_Route_Allocation
 
             foreach (var s  in path)
             {
+
+                t = new TextBlock()
+                {
+                    Text = String.Join(", ", Common_bus(Stations[prev],Stations[s]).ToArray()),
+                    Foreground = Brushes.Black,
+                    FontSize = 15,
+                };
+                cv.Children.Add(t);
+                t.SetValue(Canvas.LeftProperty, (double)13);
+                t.SetValue(Canvas.TopProperty, (double)10 + ofset - 4);
+                prev = s;
+                ofset += 25;
+
                 Ellipse cirl = new Ellipse()
                 {
                     Width = 15,
@@ -146,7 +179,8 @@ namespace Bus_Route_Allocation
                 };
                 cv.Children.Add(t);
                 t.SetValue(Canvas.LeftProperty, (double)10 + 30);
-                t.SetValue(Canvas.TopProperty, (double)10 + ofset - 4);                
+                t.SetValue(Canvas.TopProperty, (double)10 + ofset - 4);           
+
                 ofset += 25;
             }
             t = new TextBlock()

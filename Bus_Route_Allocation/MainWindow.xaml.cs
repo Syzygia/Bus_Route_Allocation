@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace Bus_Route_Allocation
 {
@@ -64,8 +65,101 @@ namespace Bus_Route_Allocation
 
         private void Button_click(object sender, RoutedEventArgs e)
         {
-           (var path, var time) = Find_path.Route("Южные ворота","Кампус ДВФУ",Stations,Waiting_time);
+            string str1 = form.Text;
+            string str2 = form2.Text;
+            string str11 = str1 = Regex.Replace(str1.ToLower(), @"[^а-я]+", "");
+            string str21 = str2 = Regex.Replace(str2.ToLower(), @"[^а-я]+", "");
+
+
+            Regex ex1 = new Regex(".*" + str1 + ".*");
+            Regex ex2 = new Regex(".*" + str2 + ".*");
+            bool f1 = false;
+            bool f2 = false;
+
+            foreach (var k in Stations.Keys)
+            {
+                if (ex1.IsMatch(k.ToLower()))
+                {
+                    f1 = true;
+                    str1 = k;
+                }
+                if (ex2.IsMatch(k.ToLower()))
+                {
+                    f2 = true;
+                    str2 = k;
+                }
+            }
+            if (f1 == false || f2 == false || str11.Length == 0 || str21.Length == 0)
+            {
+                TextBlock tx = new TextBlock()
+                {
+                    Text = "Таких станций не существует",
+                    Foreground = Brushes.Gray,
+                    FontSize = 15,
+                };
+                cv.Children.Add(tx);
+                tx.SetValue(Canvas.LeftProperty, cv.Width / 2);
+                tx.SetValue(Canvas.TopProperty, (double)6);
+                return;
+            }
+            
+            (var path, var time) = Find_path.Route(str1, str2,
+                                                   Stations, Waiting_time);
             Console.WriteLine(time);
+            cv.Children.Clear();
+            int ofset = 25;
+            Ellipse cir = new Ellipse()
+            {
+                Width = 15,
+                Height = 15,
+                Fill = Brushes.Blue
+            };
+            cv.Children.Add(cir);
+            cir.SetValue(Canvas.LeftProperty, (double)10);
+            cir.SetValue(Canvas.TopProperty, (double)10);
+            TextBlock t = new TextBlock()
+            {
+                Text = str1,
+                Foreground = Brushes.Black,               
+                FontSize = 15,
+            };
+            cv.Children.Add(t);
+            t.SetValue(Canvas.LeftProperty, (double)10 + 30);
+            t.SetValue(Canvas.TopProperty, (double)6 );
+
+            foreach (var s  in path)
+            {
+                Ellipse cirl = new Ellipse()
+                {
+                    Width = 15,
+                    Height = 15,
+                    Fill = Brushes.Blue
+                };
+                cv.Children.Add(cirl);
+                cirl.SetValue(Canvas.LeftProperty, (double)10);
+                cirl.SetValue(Canvas.TopProperty, (double)10 + ofset);
+                t = new TextBlock()
+                {
+                    Text = s,
+                    Foreground = Brushes.Black,
+                    FontSize = 15,
+                };
+                cv.Children.Add(t);
+                t.SetValue(Canvas.LeftProperty, (double)10 + 30);
+                t.SetValue(Canvas.TopProperty, (double)10 + ofset - 4);                
+                ofset += 25;
+            }
+            t = new TextBlock()
+            {
+                Text = "В среднем " + time.ToString() + " минут",
+                Foreground = Brushes.Gray,
+                FontSize = 15,
+            };
+            cv.Children.Add(t);
+            t.SetValue(Canvas.LeftProperty, (double)10);
+            t.SetValue(Canvas.TopProperty, (double)10 + ofset - 4);
         }
+
+         
     }
 }

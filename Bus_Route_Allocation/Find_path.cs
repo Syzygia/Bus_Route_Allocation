@@ -57,12 +57,13 @@ namespace Bus_Route_Allocation
             var v = to;
             while (v != from)
             {
-                if (dist[v].bus != dist[dist[v].parent.Name].bus)
+                if (dist[v].bus != dist[dist[v].parent.Name].bus && dist[v].parent.Name != from )
                 {
                     res.Add(v);
                 }
                 v = dist[v].parent.Name;
             }
+            res.Add(to);
             res.Reverse();
             return (res, dist[to].Distance);
         }

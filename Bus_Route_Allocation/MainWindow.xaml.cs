@@ -69,14 +69,11 @@ namespace Bus_Route_Allocation
             foreach((string bus, string n, double time) in st1.neighbours)
             {
                 foreach ((string bus2, string n2, double time2) in st2.neighbours)
-                {
-                    if ( (n == st2.Name) && (n2 ==st1.Name))
-                    {
-                        if (bus == bus2)
+                {                    
+                        if (bus == bus2 && answ.Contains(bus) == false )
                         {
                             answ.Add(bus);
-                        }
-                    }
+                        }                    
                 }
             }
             return answ;
@@ -146,13 +143,19 @@ namespace Bus_Route_Allocation
             cv.Children.Add(t);
             t.SetValue(Canvas.LeftProperty, (double)10 + 30);
             t.SetValue(Canvas.TopProperty, (double)6 );
+            string prev_buses = "";
 
             foreach (var s  in path)
             {
-
+                string buses = String.Join(", ", Common_bus(Stations[prev], Stations[s]).ToArray());
+                if (buses == prev_buses)
+                {
+                    continue;
+                }
+                prev_buses = buses;
                 t = new TextBlock()
                 {
-                    Text = String.Join(", ", Common_bus(Stations[prev],Stations[s]).ToArray()),
+                    Text = buses,
                     Foreground = Brushes.Black,
                     FontSize = 15,
                 };

@@ -7,10 +7,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="550">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="27" Margin="76,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="404"/>
+        <TextBox HorizontalAlignment="Left" Height="27" Margin="76,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="404">
+            <TextBox.BindingGroup>
+                <BindingGroup/>
+            </TextBox.BindingGroup>
+        </TextBox>
         <TextBlock HorizontalAlignment="Left" Height="27" Margin="24,79,0,0" TextWrapping="Wrap" Text="From:" VerticalAlignment="Top" Width="47"/>
         <TextBlock HorizontalAlignment="Left" Height="27" Margin="24,106,0,0" TextWrapping="Wrap" Text="To:" VerticalAlignment="Top" Width="47"/>
         <TextBox HorizontalAlignment="Left" Height="27" Margin="76,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="404"/>
+        <Button Content="Go" HorizontalAlignment="Left" Height="27" Margin="485,79,0,0" VerticalAlignment="Top" Width="37" Background="#FF0B32E0" Click="Button_click"/>
 
     </Grid>
 </Window>

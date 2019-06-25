@@ -148,11 +148,7 @@ namespace Bus_Route_Allocation
             foreach (var s  in path)
             {
                 string buses = String.Join(", ", Common_bus(Stations[prev], Stations[s]).ToArray());
-                if (buses == prev_buses)
-                {
-                    continue;
-                }
-                prev_buses = buses;
+             
                 t = new TextBlock()
                 {
                     Text = buses,

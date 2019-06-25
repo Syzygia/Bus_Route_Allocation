@@ -42,6 +42,7 @@ namespace Bus_Route_Allocation
                 {
                     if (((bus == p.bus)? 0 : waiting_time[bus]) + time + p.Distance < dist[n].Distance)
                     {
+                        Console.WriteLine(((bus == p.bus) ? 0 : waiting_time[bus]));
                         dist[n].parent = p.station;
                         dist[n].bus = bus;
                         dist[n].Distance = ((bus == p.bus) ? 0 : waiting_time[bus]) + time + p.Distance;
@@ -55,15 +56,15 @@ namespace Bus_Route_Allocation
             }
             var res = new List<String>();
             var v = to;
+            //res.Add(to);
             while (v != from)
             {
-                if (dist[v].bus != dist[dist[v].parent.Name].bus && dist[v].parent.Name != from )
+                if (dist[v].bus != dist[dist[v].parent.Name].bus /* && dist[v].parent.Name != from */)
                 {
                     res.Add(v);
                 }
                 v = dist[v].parent.Name;
-            }
-            res.Add(to);
+            }            
             res.Reverse();
             return (res, dist[to].Distance);
         }
